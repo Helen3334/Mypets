@@ -79,8 +79,13 @@
         
       </select>
 
+<<<<<<< HEAD
       <label for="color">Color</label>
       <input type="text" id="color" name="color" required />
+=======
+      <input type="text" id="color" placeholder="Color" required>
+      <input type="file" id="petimagen" name="petimagen" accept="image/*" required>
+>>>>>>> 40d9c3f88f41d2e890397166e86f7416335bdd7a
 
       <label for="fecha">Fecha de pérdida</label>
       <input type="date" id="fecha" name="fecha" required />
@@ -97,5 +102,78 @@
       <button type="submit">Enviar reporte</button>
     </form>
   </div>
+<<<<<<< HEAD
+=======
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Inicializar el mapa
+        const map = L.map('map').setView([4.624335, -74.063644], 13); // Ciudad de México como ejemplo
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+        }).addTo(map);
+    
+        let marker;
+        map.on('click', (e) => {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+        marker = L.marker(e.latlng).addTo(map);
+        document.getElementById('latitud').value = e.latlng.lat;
+        document.getElementById('longitud').value = e.latlng.lng;
+        });
+    
+        // Cargar razas desde la API
+        async function cargarRazas() {
+        try {
+            const res = await fetch('/api/razas');
+            const razas = await res.json();
+            const razaSelect = document.getElementById('raza_id');
+            razas.forEach(raza => {
+            const option = document.createElement('option');
+            option.value = raza.id;
+            option.textContent = raza.nombre;
+            razaSelect.appendChild(option);
+            });
+        } catch (err) {
+            console.error('Error al cargar las razas:', err);
+        }
+        }
+    
+        cargarRazas();
+  document.getElementById('reporteForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+  
+    const formData = new FormData();
+    formData.append('usuario_id', localStorage.getItem('usuario_id') || 1);
+    formData.append('nombre', document.getElementById('nombre').value);
+    formData.append('tipo', document.getElementById('tipo').value);
+    formData.append('raza_id', document.getElementById('raza_id').value);
+    formData.append('color', document.getElementById('color').value);
+    formData.append('latitud', document.getElementById('latitud').value);
+    formData.append('longitud', document.getElementById('longitud').value);
+    formData.append('descripcion', document.getElementById('descripcion').value);
+    formData.append('contacto', document.getElementById('contacto').value);
+    formData.append('tipo_reporte', 'perdida');
+    formData.append('petimagen', document.getElementById('petimagen').files[0]);
+  
+    try {
+      const res = await fetch('/api/reportes', {
+        method: 'POST',
+        enctype: 'multipart/form-data',
+        body: formData
+      });
+  
+      const data = await res.json();
+      alert(data.message || data.error);
+      if (res.ok) location.href = '/inicio.html';
+    } catch (err) {
+      alert('Error de red o del servidor');
+      console.error(err);
+    }
+  });  
+  </script>
+>>>>>>> 40d9c3f88f41d2e890397166e86f7416335bdd7a
 </body>
 </html>

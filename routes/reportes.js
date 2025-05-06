@@ -1,22 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
-// const multer = require('multer');
-const path = require('path');
+const multer = require('multer');
+const fs = require('fs');
 
-// Configurar multer
-/*const storage = multer.diskStorage({
-  destination: 'uploads/',
+// Configuración de almacenamiento
+const uploadFolder = 'uploads';
+if (!fs.existsSync(uploadFolder)) {
+  fs.mkdirSync(uploadFolder);
+}
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadFolder); // Carpeta donde guardar imágenes
+  },
   filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9) + ext;
+    const uniqueName = Date.now() + '-' + file.originalname;
     cb(null, uniqueName);
   }
 });
-const upload = multer({ storage });*/
 
-// 🔹 Ruta para crear nuevo reporte
-/*router.post('/', upload.single('imagen'), (req, res) => {
+const upload = multer({ storage });
+
+router.post('/reportes', upload.single('petimagen'), (req, res) => {
   const {
     usuario_id,
     nombre,
@@ -27,7 +32,8 @@ const upload = multer({ storage });*/
     longitud,
     descripcion,
     contacto,
-    tipo_reporte
+    tipo_reporte,
+
   } = req.body;
 
   const imagen = req.file ? req.file.filename : null;
@@ -58,10 +64,10 @@ const upload = multer({ storage });*/
 
     res.status(201).json({ message: 'Reporte con imagen guardado correctamente' });
   });
-});*/
+});
 
 // 🔹 Obtener todos los reportes
-router.get('/', (req, res) => {
+router.get('/reportes', (req, res) => {
   const { tipo } = req.query;
   const sql = tipo
     ? 'SELECT * FROM reportes_mascotas WHERE tipo_reporte = ?'
@@ -80,7 +86,7 @@ router.get('/', (req, res) => {
 
 // 🔹 Obtener razas
 router.get('/razas', (req, res) => {
-  db.query('SELECT * FROM razas ORDER BY tipo, nombre', (err, results) => {
+  db.query('SELECT * FROM razas ORDER BY especie, nombre_raza ', (err, results) => {
     if (err) {
       console.error('Error al obtener razas:', err);
       return res.status(500).json({ error: 'Error al obtener razas' });
