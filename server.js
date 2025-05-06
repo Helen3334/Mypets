@@ -25,8 +25,8 @@ app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'register.html'));
 });
 
-//const reportesRoutes = require('./routes/reportes');
-//app.use('/api/reportes', reportesRoutes);
+/*const reportesRoutes = require('./routes/reportes');
+app.use('/api/reportes', reportesRoutes);*/
 app.use('/api', require('./routes/reportes'));
 const PORT = process.env.PORT || 3001;
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
