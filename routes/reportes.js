@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
-const multer = require('multer');
+// const multer = require('multer');
 const path = require('path');
 
 // Configurar multer
-const storage = multer.diskStorage({
+/*const storage = multer.diskStorage({
   destination: 'uploads/',
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
@@ -13,10 +13,10 @@ const storage = multer.diskStorage({
     cb(null, uniqueName);
   }
 });
-const upload = multer({ storage });
+const upload = multer({ storage });*/
 
 // 🔹 Ruta para crear nuevo reporte
-router.post('/', upload.single('imagen'), (req, res) => {
+/*router.post('/', upload.single('imagen'), (req, res) => {
   const {
     usuario_id,
     nombre,
@@ -58,7 +58,7 @@ router.post('/', upload.single('imagen'), (req, res) => {
 
     res.status(201).json({ message: 'Reporte con imagen guardado correctamente' });
   });
-});
+});*/
 
 // 🔹 Obtener todos los reportes
 router.get('/', (req, res) => {
