@@ -71,7 +71,7 @@
       </select>
 
       <input type="text" id="color" placeholder="Color" required>
-      <input type="file" id="imagen" name="imagen" accept="image/*" required>
+      <input type="file" id="petimagen" name="petimagen" accept="image/*" required>
 
       <div id="map"></div>
       <input type="hidden" id="latitud">
@@ -86,7 +86,7 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         // Inicializar el mapa
-        const map = L.map('map').setView([19.4326, -99.1332], 13); // Ciudad de México como ejemplo
+        const map = L.map('map').setView([4.624335, -74.063644], 13); // Ciudad de México como ejemplo
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '© OpenStreetMap'
@@ -134,11 +134,12 @@
     formData.append('descripcion', document.getElementById('descripcion').value);
     formData.append('contacto', document.getElementById('contacto').value);
     formData.append('tipo_reporte', 'perdida');
-    formData.append('imagen', document.getElementById('imagen').files[0]);
+    formData.append('petimagen', document.getElementById('petimagen').files[0]);
   
     try {
       const res = await fetch('/api/reportes', {
         method: 'POST',
+        enctype: 'multipart/form-data',
         body: formData
       });
   
