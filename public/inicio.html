@@ -69,6 +69,12 @@
       font-size: 0.95rem;
       text-align: center;
     }
+    .btnReportePerdidas {
+      color: rgb(128, 5, 5);
+    }
+    .btnReporteEncontradas {
+      color: rgb(4, 92, 4);
+    }
   </style>
 </head>
 <body>
@@ -77,7 +83,8 @@
     <nav>
       <button id="btnEncontradas" class="active">Encontradas</button>
       <button id="btnPerdidas">Perdidas</button>
-      <button onclick="location.href='/reportar-perdida.html'">Subir reporte</button>
+      <button class="btnReportePerdidas" onclick="location.href='/reportar-perdida.html'">Reportar Mascota Perdida</button>
+      <button class="btnReporteEncontradas" onclick="location.href='/reportar-encontrada.html'">Reportar Mascota Encontrada</button>
     </nav>
   </header>
 
@@ -89,7 +96,7 @@
     const nombre = localStorage.getItem('nombre') || 'usuario';
     document.getElementById('nombreUsuario').innerText = nombre;
 
-    const map = L.map('map').setView([4.624335, -74.063644], 6);
+    const map = L.map('map').setView([4.624335, -74.063644], 10);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
@@ -120,7 +127,7 @@
             const card = document.createElement('div');
             card.className = 'card';
             card.innerHTML = `
-              <img src="/api/reportes/imagen/${reporte.id}" alt="Mascota" /
+              <img src="/uploads/${reporte.imagen}" alt="Mascota" /
               <h3>${reporte.tipo_reporte.toUpperCase()}</h3>
               <p><strong>Tipo:</strong> ${reporte.tipo}</p>
               <p><strong>Color:</strong> ${reporte.color}</p>

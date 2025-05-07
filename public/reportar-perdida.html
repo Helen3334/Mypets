@@ -11,7 +11,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: 100%;
       margin: 0;
     }
     .form-box {
@@ -57,13 +57,13 @@
   <div class="form-box">
     <h2>Reportar Mascota Perdida</h2>
     <form id="reporteForm" enctype="multipart/form-data">
+      <a href="/inicio.html" style="text-decoration: none; color: #6e01a5; font-weight: bold;">Volver a Inicio</a>
       <input type="text" id="nombre" placeholder="Nombre de la mascota" required>
 
       <select id="tipo" required>
         <option value="">Tipo de animal</option>
         <option value="perro">Perro</option>
         <option value="gato">Gato</option>
-       
       </select>
 
       <select id="raza_id" required>
@@ -86,7 +86,7 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         // Inicializar el mapa
-        const map = L.map('map').setView([4.624335, -74.063644], 13); // Coordenadas de Bogotá
+        const map = L.map('map').setView([4.624335, -74.063644], 13); // Ciudad de México como ejemplo
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '© OpenStreetMap'
