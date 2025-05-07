@@ -86,7 +86,7 @@ router.get('/reportes', (req, res) => {
 
 // 🔹 Obtener razas
 router.get('/razas', (req, res) => {
-  db.query('SELECT * FROM razas ORDER BY especie, nombre_raza ', (err, results) => {
+  db.query('SELECT * FROM razas ORDER BY tipo, nombre_raza ', (err, results) => {
     if (err) {
       console.error('Error al obtener razas:', err);
       return res.status(500).json({ error: 'Error al obtener razas' });

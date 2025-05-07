@@ -63,7 +63,6 @@
         <option value="">Tipo de animal</option>
         <option value="perro">Perro</option>
         <option value="gato">Gato</option>
-        <option value="otro">Otro</option>
       </select>
 
       <select id="raza_id" required>
@@ -111,7 +110,7 @@
             razas.forEach(raza => {
             const option = document.createElement('option');
             option.value = raza.id;
-            option.textContent = raza.nombre;
+            option.textContent = raza.nombre_raza;
             razaSelect.appendChild(option);
             });
         } catch (err) {
